@@ -1,0 +1,44 @@
+name: deploy-web-app
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup AWS
+      run: |
+          mkdir ./.aws
+          touch ./.aws/credentials
+          echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials
+    - name: ECR
+      env:
+        AWS_SHARED_CREDENTIALS_FILE: ./.aws/credentials
+        AWS_PROFILE: default
+        AWS_DEFAULT_REGION: us-east-2
+      run: |
+        aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 359409690900.dkr.ecr.us-east-2.amazonaws.com
+        docker build -t disneyrides-training ./
+        docker tag disney-web-app:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app
+        docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app
+    - name: App Runner
+      id: deploy-apprunner
+      uses: awslabs/amazon-app-runner-deploy@main 
+      with:
+        service: app-runner-image-deploy-service
+        image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app         
+        access-role-arn: ${{ secrets.APP_RUNNER_ARN }}
+        runtime: python3        
+        region: us-east-2
+        cpu : 1
+        memory : 2
+        port: 8080
+        wait-for-service-stability: true
+      
+    - name: App Runner output
+      run: echo "App runner output ${{ steps.deploy-apprunner.outputs.service-id }}"
+    
