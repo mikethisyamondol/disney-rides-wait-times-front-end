@@ -22,9 +22,9 @@ jobs:
         AWS_DEFAULT_REGION: us-east-2
       run: |
         aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 359409690900.dkr.ecr.us-east-2.amazonaws.com
-        docker build -t disneyrides-training ./
-        docker tag disney-web-app:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app
-        docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app
+        docker build -t disney-web-app .
+        docker tag disney-web-app:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
+        docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
     - name: App Runner
       id: deploy-apprunner
       uses: awslabs/amazon-app-runner-deploy@main 
