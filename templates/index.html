@@ -1,0 +1,51 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>doc</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>todos:</h1>-->
+
+<!--{% for i in dropdown%}-->
+<!--    <li>{{ i}}</li>-->
+
+<!--{% endfor%}-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+<!-- Titre et fichier/police CSS -->
+<head>
+  <meta charset="UTF-8">
+  <title>Disney Park Rider Tool</title>
+</head>
+<body>
+ <div>
+     <img src="https://cdn1.parksmedia.wdprapps.disney.com/media/disneyparks_v0100/1/media/global/header/DisneyParksLogo.png" > <br>
+     <img src="https://cdn1.parksmedia.wdprapps.disney.com/resize/mwImage/1/1600/900/90/media/disneyparks_v0100/1/media/mediaplayer/homepage/mickey-minnie-16x9.jpg" width="900" height="500" >
+    <h1>We can help you find the Ride!</h1>
+<br> Find the data of your visit:
+    <form action="{{ url_for('predict')}}" method="post">
+        <select name="select_Ride">
+        {% for i in index_list %}
+            <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <br>
+        <button type="submit">Select Date</button>
+    </form>
+ <p>Chosen Date: {{ chosen_option }}</p>
+     <p>Here are the top 3 timeframes with least waiting time for each ride, based on your choice of date</p>
+        {% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+        {% endfor %}
+   <br>
+
+
+ </div>
+</body>
+</html>
