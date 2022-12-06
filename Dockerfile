@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.7
+FROM python:3.7
 WORKDIR /opt/app
 COPY . .
 RUN python -m pip install --upgrade pip
