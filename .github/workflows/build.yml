@@ -44,11 +44,5 @@ jobs:
         cpu : 1
         memory : 2
         port: 8080
-        HealthyThreshold: 1
-        Interval: 10
-        Path: '/'
-        Protocol: TCP
-        Timeout: 5
-        UnhealthyThreshold: 5
         wait-for-service-stability-seconds: 1200
     
