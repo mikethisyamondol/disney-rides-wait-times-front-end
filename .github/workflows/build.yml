@@ -43,6 +43,6 @@ jobs:
         region: us-east-2
         cpu : 1
         memory : 2
-        port: 8080
+        port: 5000
         wait-for-service-stability-seconds: 1200
     
