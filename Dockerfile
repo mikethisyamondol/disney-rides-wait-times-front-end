@@ -4,5 +4,4 @@ COPY . .
 RUN python -m pip install --upgrade pip
 RUN  pip3 install -r requirements.txt
 EXPOSE 5000
-ENTRYPOINT [ "python3" ]
-CMD [ "application.py" ]
+CMD ["python","./application.py"]
