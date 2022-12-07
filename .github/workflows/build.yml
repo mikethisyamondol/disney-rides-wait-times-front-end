@@ -35,14 +35,10 @@ jobs:
     - name: App Runner
       id: deploy-apprunner
       uses: awslabs/amazon-app-runner-deploy@main 
-      env:
-        AWS_SHARED_CREDENTIALS_FILE: ./.aws/credentials
-        AWS_PROFILE: default
-        AWS_DEFAULT_REGION: us-east-2
       with:
         service: app-runner-image-deploy-service
         image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest       
-        access-role-arn: ${{ secrets.APP_RUNNER_ARN }}
+        access-role-arn: arn:aws:iam::359409690900:role/disney-webapp
         runtime: python3        
         region: us-east-2
         cpu : 1
