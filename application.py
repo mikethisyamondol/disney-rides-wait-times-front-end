@@ -27,6 +27,7 @@ def predict():
     # filtering data based on 'chosen option
 
     # try:
+    os.environ['AWS_PROFILE'] = "default"
     ddb = boto3.resource('dynamodb', region_name='us-east-2')
     table = ddb.Table('disneyridepreds')
 
