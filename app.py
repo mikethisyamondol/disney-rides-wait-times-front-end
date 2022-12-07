@@ -36,6 +36,7 @@ def queryDynamo(chosen_option):
     # st.header('Disneyland Ride Planner')
     return df
 
+df2 = queryDynamo('')
 
 with st.sidebar:
     image = Image.open('dateicon.png')
