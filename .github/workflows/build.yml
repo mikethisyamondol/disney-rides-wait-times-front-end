@@ -22,9 +22,9 @@ jobs:
         AWS_DEFAULT_REGION: us-east-2
       run: |
         aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 359409690900.dkr.ecr.us-east-2.amazonaws.com
-        docker build -t disney-web-app .
-        docker tag disney-web-app:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
-        docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
+        docker build -t disney-web-app-v2 .
+        docker tag disney-web-app-v2:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app-v2:latest
+        docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app-v2:latest
     - name: Configure AWS credentials
       id: aws-credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -33,11 +33,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2 
     - name: App Runner
-      id: deploy-apprunner
+      id: deploy-apprunner-v2
       uses: awslabs/amazon-app-runner-deploy@main 
       with:
         service: app-runner-image-deploy-service
-        image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest       
+        image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app-v2:latest       
         access-role-arn: ${{ secrets.APP_RUNNER_ARN }}
         runtime: python3        
         region: us-east-2
