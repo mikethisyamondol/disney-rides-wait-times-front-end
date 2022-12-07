@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 import os
 import boto3
-
+from boto3.dynamodb.conditions import Key, Attr
 
 app = Flask(__name__)
 
