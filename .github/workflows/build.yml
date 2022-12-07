@@ -14,14 +14,7 @@ jobs:
       run: |
           mkdir ./.aws
           touch ./.aws/credentials
-          echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials
-    - name: Configure AWS credentials
-      id: aws-credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2  
+          echo '${{ secrets.AWS_CREDENTIALS_FILE }}' > ./.aws/credentials 
     - name: ECR
       env:
         AWS_SHARED_CREDENTIALS_FILE: ./.aws/credentials
@@ -32,6 +25,13 @@ jobs:
         docker build -t disney-web-app .
         docker tag disney-web-app:latest 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
         docker push 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest
+    - name: Configure AWS credentials
+      id: aws-credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2 
     - name: App Runner
       id: deploy-apprunner
       uses: awslabs/amazon-app-runner-deploy@main 
