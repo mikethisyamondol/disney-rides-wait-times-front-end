@@ -26,35 +26,35 @@ def predict():
         )
     # filtering data based on 'chosen option
 
-    try:
-        ddb = boto3.resource('dynamodb', region_name='us-east-2')
-        table = ddb.Table('disneyridepreds')
+    # try:
+    ddb = boto3.resource('dynamodb', region_name='us-east-2')
+    table = ddb.Table('disneyridepreds')
 
-        response = table.scan(
-        FilterExpression=Attr('ds').begins_with(chosen_option)
-        )
+    response = table.scan(
+    FilterExpression=Attr('ds').begins_with(chosen_option)
+    )
 
-        data = response['Items']
-        df = pd.DataFrame.from_dict(data)
+    data = response['Items']
+    df = pd.DataFrame.from_dict(data)
 
-        df2 = df.groupby(['ds', 'ride_name']).agg({'yhat': ['mean']})
-        df2 = df2.reset_index()
-        df2.columns = ['hour', 'ride', 'wait']
-        df2['rank'] = df2.groupby('ride')['hour'].rank(ascending=True)
+    df2 = df.groupby(['ds', 'ride_name']).agg({'yhat': ['mean']})
+    df2 = df2.reset_index()
+    df2.columns = ['hour', 'ride', 'wait']
+    df2['rank'] = df2.groupby('ride')['hour'].rank(ascending=True)
 
-        df3 = df2[df2['rank'] < 4]
-        df3 = df3.sort_values(by=['ride', 'rank', 'hour'], ascending=True)
-        df3['ride'] = df3['ride'].str.replace('.csv', '')
+    df3 = df2[df2['rank'] < 4]
+    df3 = df3.sort_values(by=['ride', 'rank', 'hour'], ascending=True)
+    df3['ride'] = df3['ride'].str.replace('.csv', '')
     
-    except:
-        df3 = pd.DataFrame(
-            {
-                'ride': [],
-                'rank': [],
-                'hour': [],
-                'wait_time': []
-            }
-        )
+    # except:
+    #     df3 = pd.DataFrame(
+    #         {
+    #             'ride': [],
+    #             'rank': [],
+    #             'hour': [],
+    #             'wait_time': []
+    #         }
+    #     )
 
     return render_template(
         template_name_or_list='index.html',
