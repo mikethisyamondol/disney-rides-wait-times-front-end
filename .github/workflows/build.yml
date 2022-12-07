@@ -36,7 +36,7 @@ jobs:
       id: deploy-apprunner-v2
       uses: awslabs/amazon-app-runner-deploy@main 
       with:
-        service: app-runner-image-deploy-service
+        service: app-runner-image-deploy-service-v2
         image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app-v2:latest       
         access-role-arn: ${{ secrets.APP_RUNNER_ARN }}
         runtime: python3        
