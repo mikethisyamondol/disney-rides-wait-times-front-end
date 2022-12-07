@@ -16,7 +16,7 @@ def predict():
     d_list = pd.date_range(start, end)
     index_list = [d.strftime("%Y-%m-%d") for d in d_list]
 
-    chosen_option = None
+    chosen_option = ''
 
     if request.method == 'POST':
         default_value = 'None Selected'
