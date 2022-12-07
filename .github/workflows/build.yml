@@ -39,11 +39,10 @@ jobs:
         service: app-runner-image-deploy-service
         image: 359409690900.dkr.ecr.us-east-2.amazonaws.com/disney-web-app:latest       
         access-role-arn: ${{ secrets.APP_RUNNER_ARN }}
-        source-connection-arn: ${{ secrets.APP_RUNNER_ARN }}
         runtime: python3        
         region: us-east-2
         cpu : 1
         memory : 2
-        port: 5000
+        port: 8501
         wait-for-service-stability-seconds: 1200
     
